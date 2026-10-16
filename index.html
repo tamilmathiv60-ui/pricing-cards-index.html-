@@ -1,1056 +1,461 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nova — Pricing Plans</title>
-
-<style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
-:root {
-  --purple: #9875ff;
-  --cyan: #54e9f4;
-  --lime: #c8ff52;
-  --ink: #101522;
-  --muted: #69738a;
-  --surface: #ffffff;
-  --page: #f8f9ff;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  color: var(--ink);
-  background:
-    radial-gradient(ellipse at 5% 15%, #dce4ff 0, transparent 28%),
-    radial-gradient(ellipse at 95% 10%, #d6fbff 0, transparent 30%),
-    var(--page);
-  line-height: 1.6;
-}
-
-button, a {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.container {
-  width: min(1160px, 92%);
-  margin-inline: auto;
-}
-
-header {
-  height: 78px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.logo {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 29px;
-  font-weight: 800;
-  letter-spacing: -1.8px;
-}
-
-.logo span {
-  color: var(--purple);
-}
-
-nav {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-}
-
-nav a {
-  font-size: 13px;
-  font-weight: 700;
-  color: #4b5368;
-  transition: color .2s;
-}
-
-nav a:hover {
-  color: var(--purple);
-}
-
-.top-button {
-  border: none;
-  background: var(--ink);
-  color: white;
-  padding: 12px 21px;
-  border-radius: 30px;
-  font-size: 12px;
-  font-weight: 700;
-  transition: transform .2s, box-shadow .2s;
-}
-
-.top-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 7px 22px #10152225;
-}
-
-.hero {
-  padding: 55px 0 58px;
-}
-
-.hero-layout {
-  display: grid;
-  grid-template-columns: .9fr 1.5fr;
-  gap: 42px;
-  align-items: center;
-}
-
-.pill {
-  display: inline-block;
-  background: #eee7ff;
-  color: #7145e8;
-  padding: 7px 13px;
-  border-radius: 30px;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 18px;
-}
-
-h1, h2, h3, h4 {
-  font-family: 'Space Grotesk', sans-serif;
-}
-
-.hero h1 {
-  font-size: clamp(38px, 4.3vw, 57px);
-  line-height: 1.08;
-  letter-spacing: -2.5px;
-  margin-bottom: 18px;
-}
-
-.gradient-text {
-  background: linear-gradient(100deg, #9162ff, #32dce7);
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-}
-
-.hero-copy > p {
-  color: #5f687e;
-  font-size: 14px;
-  max-width: 370px;
-}
-
-.billing {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 5px;
-  border-radius: 40px;
-  background: #e9e8fb;
-  margin-top: 27px;
-}
-
-.billing button {
-  border: 0;
-  background: transparent;
-  color: #4c5266;
-  border-radius: 30px;
-  padding: 10px 19px;
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.billing button.active {
-  background: var(--ink);
-  color: white;
-}
-
-.save-label {
-  color: #42621a;
-  background: var(--lime);
-  border-radius: 20px;
-  padding: 7px 10px;
-  font-size: 10px;
-  font-weight: 800;
-  margin-left: 8px;
-}
-
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 13px;
-  align-items: stretch;
-}
-
-.price-card {
-  position: relative;
-  border: 1px solid #323a50;
-  border-radius: 19px;
-  background: linear-gradient(145deg, #1b2133, #0e1220);
-  color: white;
-  padding: 25px 17px;
-  overflow: visible;
-  transition: transform .25s, box-shadow .25s, border-color .25s;
-}
-
-.price-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--cyan);
-  box-shadow: 0 16px 32px #7772ff30;
-}
-
-.price-card.popular {
-  background: linear-gradient(145deg, #c9b4ff 0%, #62e9f0 53%, #a77aff 100%);
-  color: #101522;
-  border-color: white;
-  box-shadow: 0 15px 36px #9875ff2b;
-  transform: translateY(-8px);
-}
-
-.price-card.popular:hover {
-  transform: translateY(-14px);
-}
-
-.ribbon {
-  position: absolute;
-  top: -13px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--lime);
-  color: #17220b;
-  border-radius: 20px;
-  white-space: nowrap;
-  padding: 5px 13px;
-  font-size: 10px;
-  font-weight: 800;
-}
-
-.plan-name {
-  font-size: 20px;
-  margin-bottom: 6px;
-}
-
-.plan-description {
-  font-size: 11px;
-  color: #c2c8d8;
-  min-height: 38px;
-}
-
-.popular .plan-description {
-  color: #30394b;
-}
-
-.price {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 39px;
-  font-weight: 700;
-  letter-spacing: -2px;
-  margin-top: 18px;
-  white-space: nowrap;
-}
-
-.price small {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0;
-}
-
-.billed {
-  min-height: 19px;
-  color: #aeb7ca;
-  font-size: 10px;
-}
-
-.popular .billed {
-  color: #374259;
-}
-
-.plan-button {
-  width: 100%;
-  margin: 19px 0;
-  border: 1px solid #737e9d;
-  background: transparent;
-  color: white;
-  border-radius: 30px;
-  padding: 11px 5px;
-  font-size: 11px;
-  font-weight: 800;
-  transition: background .2s, color .2s, transform .2s;
-}
-
-.plan-button:hover {
-  background: white;
-  color: #121827;
-  transform: scale(1.03);
-}
-
-.popular .plan-button {
-  background: #111625;
-  border-color: #111625;
-  color: white;
-}
-
-.popular .plan-button:hover {
-  background: #303b51;
-}
-
-.price-card ul {
-  list-style: none;
-  display: grid;
-  gap: 11px;
-  font-size: 10px;
-}
-
-.price-card li::before {
-  content: "✓";
-  color: var(--lime);
-  font-weight: 800;
-  margin-right: 7px;
-}
-
-.popular li::before {
-  color: #087c70;
-}
-
-.trusted {
-  border-top: 1px solid #e8eaf3;
-  border-bottom: 1px solid #e8eaf3;
-  padding: 24px 0;
-  background: #ffffff91;
-}
-
-.trusted-inner {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.trusted-label {
-  font-size: 11px;
-  color: #8991a4;
-}
-
-.brand {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #727d94;
-}
-
-.section {
-  padding: 76px 0;
-}
-
-.section-heading {
-  text-align: center;
-  margin-bottom: 35px;
-}
-
-.section-heading h2 {
-  font-size: clamp(28px, 4vw, 40px);
-  line-height: 1.2;
-  letter-spacing: -1.5px;
-}
-
-.section-heading p {
-  color: var(--muted);
-  font-size: 13px;
-  margin-top: 9px;
-}
-
-.features-layout {
-  display: grid;
-  grid-template-columns: .8fr 1.2fr 1fr;
-  gap: 20px;
-  align-items: stretch;
-}
-
-.features-intro {
-  padding: 14px 0;
-}
-
-.features-intro h2 {
-  font-size: 32px;
-  line-height: 1.15;
-  letter-spacing: -1px;
-}
-
-.features-intro > p {
-  color: var(--muted);
-  font-size: 12px;
-  margin-top: 14px;
-}
-
-.feature-item {
-  display: flex;
-  gap: 13px;
-  align-items: center;
-  margin-top: 23px;
-}
-
-.feature-icon {
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  border-radius: 13px;
-  font-size: 20px;
-  background: #e8ddff;
-}
-
-.feature-item:nth-of-type(3) .feature-icon {
-  background: #d5faff;
-}
-
-.feature-item:nth-of-type(4) .feature-icon {
-  background: #e6ffad;
-}
-
-.feature-item h4 {
-  font-size: 12px;
-}
-
-.feature-item p {
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.panel {
-  background: #ffffffc9;
-  border: 1px solid #e2e6f1;
-  border-radius: 17px;
-  padding: 21px 17px;
-  box-shadow: 0 8px 30px #303c6810;
-}
-
-.panel h3 {
-  font-size: 18px;
-}
-
-.panel-subtitle {
-  color: var(--muted);
-  font-size: 11px;
-  margin-bottom: 19px;
-}
-
-.table-wrap {
-  overflow-x: auto;
-}
-
-.comparison {
-  width: 100%;
-  min-width: 330px;
-  border-collapse: collapse;
-}
-
-.comparison th, .comparison td {
-  padding: 13px 6px;
-  border-bottom: 1px solid #e9ecf4;
-  text-align: center;
-  font-size: 10px;
-}
-
-.comparison th:first-child, .comparison td:first-child {
-  text-align: left;
-}
-
-.comparison th {
-  font-size: 10px;
-}
-
-.comparison th:nth-child(3) {
-  background: #e6faff;
-  border-radius: 8px 8px 0 0;
-}
-
-.comparison tr:last-child td {
-  border-bottom: 0;
-}
-
-.check {
-  color: #57b92d;
-  font-weight: 800;
-  font-size: 15px !important;
-}
-
-.checkout-plan {
-  background: linear-gradient(120deg, #f3eaff, #e2fbff);
-  border: 1px solid #e0dcff;
-  padding: 15px;
-  border-radius: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 16px;
-}
-
-.checkout-plan strong {
-  font-size: 13px;
-}
-
-.checkout-plan p {
-  color: var(--muted);
-  font-size: 10px;
-}
-
-.checkout-price {
-  font-size: 19px;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  font-size: 11px;
-  padding: 11px 0;
-  border-bottom: 1px solid #e8eaf1;
-}
-
-.summary-row.total {
-  font-weight: 800;
-  font-size: 14px;
-  border-bottom: 0;
-}
-
-.checkout-button {
-  width: 100%;
-  border: 0;
-  background: linear-gradient(100deg, #8e65ff, #26233e);
-  color: white;
-  border-radius: 30px;
-  padding: 13px;
-  margin-top: 9px;
-  font-size: 11px;
-  font-weight: 800;
-  box-shadow: 0 6px 15px #9875ff35;
-  transition: transform .2s;
-}
-
-.checkout-button:hover {
-  transform: translateY(-3px);
-}
-
-.notice {
-  text-align: center;
-  color: var(--muted);
-  font-size: 10px;
-  margin-top: 12px;
-}
-
-.mobile-section {
-  padding: 30px 0 0;
-}
-
-.mobile-banner {
-  background:
-    radial-gradient(circle at 45% 70%, #5436a9, transparent 35%),
-    linear-gradient(115deg, #101522, #171c34);
-  color: white;
-  border-radius: 23px;
-  padding: 40px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  align-items: center;
-  gap: 20px;
-  overflow: hidden;
-}
-
-.mobile-banner h2 {
-  font-size: 30px;
-  line-height: 1.15;
-  letter-spacing: -1px;
-}
-
-.mobile-banner p {
-  color: #c4cada;
-  font-size: 12px;
-  margin-top: 12px;
-}
-
-.mobile-list {
-  list-style: none;
-  display: grid;
-  gap: 9px;
-  margin-top: 17px;
-  font-size: 11px;
-}
-
-.mobile-list li::before {
-  content: "✓ ";
-  color: var(--lime);
-  font-weight: 800;
-}
-
-.phone-stage {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 13px;
-  min-width: 0;
-}
-
-.phone {
-  width: 135px;
-  min-height: 245px;
-  padding: 12px 9px;
-  border-radius: 24px;
-  border: 4px solid #444b62;
-  background: #111827;
-  box-shadow: 0 0 22px #6e5cff55;
-  transform: rotate(-5deg);
-  transition: transform .3s;
-}
-
-.phone:hover {
-  transform: rotate(0deg) translateY(-7px);
-}
-
-.phone.light {
-  background: white;
-  color: #141927;
-  border-color: #dce1f0;
-  transform: rotate(5deg);
-}
-
-.phone.light:hover {
-  transform: rotate(0deg) translateY(-7px);
-}
-
-.phone-notch {
-  width: 44px;
-  height: 8px;
-  border-radius: 20px;
-  background: #454c60;
-  margin: -3px auto 16px;
-}
-
-.phone-logo {
-  font-size: 10px;
-  font-weight: 800;
-}
-
-.phone h4 {
-  font-size: 12px;
-  margin: 16px 0 5px;
-}
-
-.phone p {
-  font-size: 9px;
-  color: #a9b4c9;
-  margin: 0;
-}
-
-.phone-price {
-  font-size: 25px;
-  color: var(--cyan);
-  font-weight: 800;
-  margin-top: 8px;
-}
-
-.phone.light .phone-price {
-  color: #7d54e9;
-}
-
-.phone-feature {
-  border-radius: 6px;
-  background: #283047;
-  padding: 8px 5px;
-  margin-top: 13px;
-  font-size: 8px;
-}
-
-.phone.light .phone-feature {
-  background: #f0ecff;
-}
-
-.phone-cta {
-  background: var(--lime);
-  color: #17220b;
-  border-radius: 8px;
-  text-align: center;
-  padding: 8px 3px;
-  font-size: 9px;
-  font-weight: 800;
-  margin-top: 13px;
-}
-
-.banner-note {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(24px, 3vw, 37px);
-  font-weight: 800;
-  color: var(--lime);
-  line-height: 1.15;
-  text-align: center;
-  transform: rotate(-7deg);
-}
-
-footer {
-  padding: 25px 0;
-  margin-top: 25px;
-  background: #101522;
-  color: #c7cce0;
-}
-
-.footer-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-footer .logo {
-  color: white;
-  font-size: 23px;
-}
-
-footer p {
-  font-size: 11px;
-}
-
-.status {
-  color: var(--lime);
-  font-size: 11px;
-}
-
-@media (max-width: 1000px) {
-  .hero-layout {
-    grid-template-columns: 1fr;
-    gap: 45px;
-  }
-
-  .hero-copy {
-    text-align: center;
-  }
-
-  .hero-copy > p {
-    margin: auto;
-  }
-
-  .features-layout {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .features-intro {
-    grid-column: 1 / -1;
-  }
-
-  .features-intro h2 {
-    font-size: 34px;
-  }
-
-  .mobile-banner {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .banner-note {
-    display: none;
-  }
-}
-
-@media (max-width: 650px) {
-  header {
-    height: auto;
-    padding: 20px 0;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    order: 3;
-    width: 100%;
-    justify-content: space-between;
-    gap: 10px;
-  }
-
-  .top-button {
-    padding: 10px 14px;
-  }
-
-  .hero {
-    padding-top: 35px;
-  }
-
-  .hero h1 {
-    letter-spacing: -1.5px;
-  }
-
-  .pricing-grid {
-    grid-template-columns: 1fr;
-    max-width: 390px;
-    margin: auto;
-    gap: 23px;
-  }
-
-  .price-card.popular,
-  .price-card.popular:hover {
-    transform: none;
-  }
-
-  .price-card {
-    padding: 26px;
-  }
-
-  .price-card ul {
-    font-size: 12px;
-  }
-
-  .trusted-inner {
-    gap: 17px;
-  }
-
-  .section {
-    padding: 55px 0;
-  }
-
-  .features-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .features-intro {
-    grid-column: auto;
-  }
-
-  .panel {
-    padding: 17px 12px;
-  }
-
-  .mobile-banner {
-    grid-template-columns: 1fr;
-    padding: 27px 18px;
-    text-align: center;
-  }
-
-  .mobile-banner h2 {
-    font-size: 28px;
-  }
-
-  .mobile-list {
-    text-align: left;
-    display: inline-grid;
-  }
-
-  .phone-stage {
-    padding: 12px 0;
-  }
-
-  .phone {
-    width: 145px;
-  }
-
-  .footer-inner {
-    justify-content: center;
-    text-align: center;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing Plans</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f8f9fc;
+      color: #111827;
+      min-height: 100vh;
+    }
+
+    .pricing-section {
+      max-width: 1200px;
+      margin: auto;
+      padding: 70px 24px;
+    }
+
+    .pricing-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.7fr;
+      gap: 45px;
+      align-items: center;
+    }
+
+    .intro small {
+      color: #6c63ff;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .intro h1 {
+      font-size: clamp(32px, 4vw, 48px);
+      line-height: 1.15;
+      margin: 22px 0;
+    }
+
+    .intro h1 span {
+      color: #6495ed;
+    }
+
+    .intro p {
+      color: #687386;
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .billing {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .billing button {
+      border: none;
+      padding: 12px 18px;
+      border-radius: 30px;
+      cursor: pointer;
+      background: #e9edf5;
+      color: #111827;
+      font-weight: bold;
+      transition: 0.2s;
+      touch-action: manipulation;
+    }
+
+    .billing button.active {
+      background: #111827;
+      color: white;
+    }
+
+    .save-label {
+      background: #d5ff00;
+      color: #111;
+      padding: 7px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .plan {
+      background: #111318;
+      color: white;
+      padding: 25px 18px;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      min-height: 360px;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .plan:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 14px 30px #0002;
+    }
+
+    .plan.featured {
+      background: linear-gradient(150deg, #09b9e8, #8299ff);
+      color: #071326;
+      position: relative;
+    }
+
+    .plan h2 {
+      font-size: 22px;
+      margin-bottom: 14px;
+    }
+
+    .description {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #b7c1d3;
+      min-height: 60px;
+    }
+
+    .featured .description {
+      color: #173c63;
+    }
+
+    .price {
+      font-size: 34px;
+      font-weight: bold;
+      margin: 22px 0 5px;
+      overflow-wrap: anywhere;
+    }
+
+    .period {
+      font-size: 12px;
+      color: #aeb8ca;
+      margin-bottom: 22px;
+    }
+
+    .featured .period {
+      color: #173c63;
+    }
+
+    .plan-link {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      border: 1px solid #667085;
+      color: white;
+      border-radius: 30px;
+      padding: 12px 8px;
+      margin-bottom: 24px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+      touch-action: manipulation;
+    }
+
+    .featured .plan-link {
+      background: #111318;
+      color: white;
+      border-color: #111318;
+    }
+
+    .plan-link:hover,
+    .plan-link:focus-visible {
+      background: #d5ff00;
+      color: #111;
+      border-color: #d5ff00;
+      outline: none;
+    }
+
+    .features {
+      list-style: none;
+      display: grid;
+      gap: 13px;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .features li::before {
+      content: "✓";
+      color: #d5ff00;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .featured .features li::before {
+      color: #063d55;
+    }
+
+    .plan .note {
+      font-size: 12px;
+      margin-top: auto;
+      padding-top: 18px;
+      opacity: 0.8;
+    }
+
+    .brands {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-top: 75px;
+      color: #8a91a2;
+      font-weight: bold;
+    }
+
+    .brands span {
+      font-size: 15px;
+    }
+
+    @media (max-width: 850px) {
+      .pricing-layout {
+        grid-template-columns: 1fr;
+        gap: 35px;
+      }
+
+      .intro {
+        text-align: center;
+      }
+
+      .billing {
+        justify-content: center;
+      }
+
+      .plans {
+        gap: 12px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .pricing-section {
+        padding: 40px 16px;
+      }
+
+      .plans {
+        grid-template-columns: 1fr;
+      }
+
+      .plan {
+        min-height: auto;
+        padding: 28px 24px;
+      }
+
+      .description {
+        min-height: auto;
+      }
+
+      .price {
+        font-size: 36px;
+      }
+
+      .brands {
+        margin-top: 45px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header class="container">
-  <a class="logo" href="#">✦ Nova<span>.</span></a>
+  <main class="pricing-section">
 
-  <nav aria-label="Main navigation">
-    <a href="#features">Features</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#about">About</a>
-    <a href="#mobile">Mobile</a>
-  </nav>
+    <div class="pricing-layout">
 
-  <a class="top-button" href="#pricing">Get Started ↗</a>
-</header>
+      <section class="intro">
+        <small>PRICING PLANS</small>
 
-<main>
-<section class="hero container" id="pricing">
-  <div class="hero-layout">
+        <h1>
+          Build what's<br>
+          next with the<br>
+          <span>right plan.</span>
+        </h1>
 
-    <div class="hero-copy">
-      <span class="pill">✦ Simple plans. Bigger dreams.</span>
-      <h1>Build what's next with the <span class="gradient-text">right plan.</span></h1>
-      <p>Flexible pricing for creators, teams and businesses. Choose what fits your journey.</p>
+        <p>
+          Choose a plan that suits your needs.
+          Upgrade whenever you are ready.
+        </p>
 
-      <div class="billing" aria-label="Billing frequency">
-        <button id="monthlyBtn" class="active" type="button" aria-pressed="true">Monthly</button>
-        <button id="yearlyBtn" type="button" aria-pressed="false">Yearly</button>
-      </div>
-      <span class="save-label">✦ Save 20%</span>
-    </div>
+        <div class="billing" aria-label="Choose billing period">
+          <button type="button"
+                  class="active"
+                  data-billing="monthly"
+                  aria-pressed="true">
+            Monthly
+          </button>
 
-    <div class="pricing-grid">
+          <button type="button"
+                  data-billing="yearly"
+                  aria-pressed="false">
+            Yearly
+          </button>
 
-      <article class="price-card">
-        <h3 class="plan-name">Starter</h3>
-        <p class="plan-description">Perfect for individuals getting started.</p>
-        <div class="price">$<span class="amount" data-month="9" data-year="7">9</span><small> /mo</small></div>
-        <p class="billed">Billed monthly</p>
-        <button class="plan-button choose-plan" data-plan="Starter" type="button">Get Started →</button>
-        <ul>
-          <li>1 project workspace</li>
-          <li>Basic analytics</li>
-          <li>5 GB storage</li>
-          <li>Email support</li>
-        </ul>
-      </article>
-
-      <article class="price-card popular">
-        <span class="ribbon">Most Popular ✦</span>
-        <h3 class="plan-name">Pro</h3>
-        <p class="plan-description">For growing teams and ambitious creators.</p>
-        <div class="price">$<span class="amount" data-month="19" data-year="15">19</span><small> /mo</small></div>
-        <p class="billed">Billed monthly</p>
-        <button class="plan-button choose-plan" data-plan="Pro" type="button">Get Started →</button>
-        <ul>
-          <li>Unlimited projects</li>
-          <li>Advanced analytics</li>
-          <li>100 GB storage</li>
-          <li>Priority support</li>
-          <li>Team collaboration</li>
-        </ul>
-      </article>
-
-      <article class="price-card">
-        <h3 class="plan-name">Enterprise</h3>
-        <p class="plan-description">For large teams and custom needs.</p>
-        <div class="price">$<span class="amount" data-month="49" data-year="39">49</span><small> /mo</small></div>
-        <p class="billed">Billed monthly</p>
-        <button class="plan-button choose-plan" data-plan="Enterprise" type="button">Contact Sales →</button>
-        <ul>
-          <li>Everything in Pro</li>
-          <li>1 TB storage</li>
-          <li>Custom integrations</li>
-          <li>Dedicated support</li>
-          <li>Advanced permissions</li>
-        </ul>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<div class="trusted">
-  <div class="container trusted-inner">
-    <span class="trusted-label">Trusted by 10,000+ teams</span>
-    <span class="brand">◉ Spotify</span>
-    <span class="brand">▣ Notion</span>
-    <span class="brand">✣ Figma</span>
-    <span class="brand">▰ Netflix</span>
-    <span class="brand">◉ Discord</span>
-    <span class="brand">Google</span>
-  </div>
-</div>
-
-<section class="section container" id="features">
-  <div class="features-layout">
-
-    <div class="features-intro">
-      <span class="pill">Features</span>
-      <h2>Everything you need. Nothing <span class="gradient-text">you don't.</span></h2>
-      <p>Powerful features, simple pricing. Get the most out of your plan with tools built for modern teams.</p>
-
-      <div class="feature-item">
-        <div class="feature-icon">ϟ</div>
-        <div>
-          <h4>Scale at your own pace</h4>
-          <p>Upgrade or downgrade anytime.</p>
+          <span class="save-label">SAVE 20%</span>
         </div>
-      </div>
+      </section>
 
-      <div class="feature-item">
-        <div class="feature-icon">♢</div>
-        <div>
-          <h4>Transparent pricing</h4>
-          <p>No hidden fees. Just value.</p>
-        </div>
-      </div>
+      <section class="plans" aria-label="Available pricing plans">
 
-      <div class="feature-item">
-        <div class="feature-icon">♧</div>
-        <div>
-          <h4>Built for collaboration</h4>
-          <p>Work better, together.</p>
-        </div>
-      </div>
+        <article class="plan">
+          <h2>Starter</h2>
+
+          <p class="description">
+            Perfect for individuals getting started.
+          </p>
+
+          <div class="price"
+               data-monthly="9"
+               data-yearly="7">
+            $9
+          </div>
+
+          <p class="period">per user / month</p>
+
+          <a href="#get-started"
+             class="plan-link"
+             data-plan="Starter">
+            Get Started
+          </a>
+
+          <ul class="features">
+            <li>Basic features</li>
+            <li>Project management</li>
+            <li>Email support</li>
+            <li>Basic analytics</li>
+          </ul>
+
+          <p class="note">Great for beginners</p>
+        </article>
+
+        <article class="plan featured">
+          <h2>Pro</h2>
+
+          <p class="description">
+            Advanced tools for growing teams.
+          </p>
+
+          <div class="price"
+               data-monthly="19"
+               data-yearly="15">
+            $19
+          </div>
+
+          <p class="period">per user / month</p>
+
+          <a href="#get-started"
+             class="plan-link"
+             data-plan="Pro">
+            Get Started
+          </a>
+
+          <ul class="features">
+            <li>Everything in Starter</li>
+            <li>Advanced analytics</li>
+            <li>Priority support</li>
+            <li>Team collaboration</li>
+          </ul>
+
+          <p class="note">Best for growing teams</p>
+        </article>
+
+        <article class="plan">
+          <h2>Enterprise</h2>
+
+          <p class="description">
+            Powerful solutions for larger businesses.
+          </p>
+
+          <div class="price"
+               data-monthly="49"
+               data-yearly="39">
+            $49
+          </div>
+
+          <p class="period">per user / month</p>
+
+          <a href="#get-started"
+             class="plan-link"
+             data-plan="Enterprise">
+            Get Started
+          </a>
+
+          <ul class="features">
+            <li>Everything in Pro</li>
+            <li>Advanced security</li>
+            <li>Dedicated support</li>
+            <li>Custom integrations</li>
+          </ul>
+
+          <p class="note">For larger organizations</p>
+        </article>
+
+      </section>
     </div>
 
-    <div class="panel">
-      <h3>Plan Comparison</h3>
-      <p class="panel-subtitle">See how each plan stacks up.</p>
-      <div class="table-wrap">
-        <table class="comparison">
-          <thead>
-            <tr>
-              <th>Features</th>
-              <th>Starter</th>
-              <th>Pro</th>
-              <th>Enterprise</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>Workspaces</td><td>1</td><td>Unlimited</td><td>Unlimited</td></tr>
-            <tr><td>Analytics</td><td>Basic</td><td>Advanced</td><td>Advanced</td></tr>
-            <tr><td>Storage</td><td>5 GB</td><td>100 GB</td><td>1 TB</td></tr>
-            <tr><td>Team members</td><td>3</td><td>10</td><td>Unlimited</td></tr>
-            <tr><td>Priority support</td><td>—</td><td class="check">✓</td><td class="check">✓</td></tr>
-            <tr><td>Integrations</td><td>—</td><td>—</td><td class="check">✓</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <section class="brands" aria-label="Trusted by teams">
+      <span>Microsoft</span>
+      <span>Google</span>
+      <span>Slack</span>
+      <span>Figma</span>
+      <span>Notion</span>
+      <span>Adobe</span>
+    </section>
 
-    <div class="panel" id="checkout">
-      <h3>Checkout Preview</h3>
-      <p class="panel-subtitle">Your selected plan details.</p>
+  </main>
 
-      <div class="checkout-plan">
-        <div>
-          <strong>♛ <span id="checkoutPlan">Pro</span> Plan</strong>
-          <p id="checkoutCycle">Monthly billing</p>
-        </div>
-        <div class="checkout-price" id="checkoutPrice">$19<small> /mo</small></div>
-      </div>
+  <script>
+    // Switch between monthly and yearly prices
+    const billingButtons =
+      document.querySelectorAll("[data-billing]");
 
-      <div class="summary-row"><span>Subtotal</span><span id="subtotal">$19</span></div>
-      <div class="summary-row"><span>Discount</span><span id="discount">—</span></div>
-      <div class="summary-row total"><span>Total / month</span><span id="total">$19</span></div>
+    const prices =
+      document.querySelectorAll(".price");
 
-      <button class="checkout-button" id="checkoutBtn" type="button">Continue to Checkout →</button>
-      <p class="notice" id="checkoutMessage" aria-live="polite">Demo only. No payment will be processed.</p>
-    </div>
+    billingButtons.forEach(function(button) {
+      button.addEventListener("click", function() {
+        const billing = button.dataset.billing;
 
-  </div>
-</section>
+        billingButtons.forEach(function(item) {
+          const isActive = item === button;
 
-<section class="mobile-section container" id="mobile">
-  <div class="mobile-banner">
-    <div>
-      <span class="pill">Mobile experience</span>
+          item.classList.toggle("active", isActive);
+          item.setAttribute("aria-pressed", isActive);
+        });
+
+        prices.forEach(function(price) {
+          price.textContent =
+            "$" + price.dataset[billing];
+        });
+      });
+    });
+
+    // Make every Get Started link respond to clicks
+    const planLinks =
+      document.querySelectorAll(".plan-link");
+
+    planLinks.forEach(function(link) {
+      link.addEventListener("click", function(event) {
+        event.preventDefault();
+
+        const planName = link.dataset.plan;
+
+        alert(
+          "You selected the " + planName +
+          " plan! Connect this button to your signup page."
+        );
+      });
+    });
+  </script>
+
+</body>
+</html>
