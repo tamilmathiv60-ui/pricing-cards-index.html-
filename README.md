@@ -1,1 +1,1 @@
-# pricing-cards-index.html-
+# pricing-cards
