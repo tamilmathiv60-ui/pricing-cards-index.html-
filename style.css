@@ -1,0 +1,150 @@
+import React, { useState } from 'react';
+
+const plans = [
+  {
+    name: "Starter",
+    description: "Essential tools for individuals and solo developers testing the waters.",
+    price: { monthly: 19, annual: 15 },
+    annualNote: "Billed $180 annually",
+    popular: false,
+    cta: "Start Free Trial",
+    ctaLink: "#starter",
+    features: [
+      { text: "Up to 3 active projects", included: true },
+      { text: "10 GB Cloud storage", included: true },
+      { text: "Standard email support", included: true },
+      { text: "Advanced analytics", included: false },
+      { text: "Custom domain & SSO", included: false }
+    ]
+  },
+  {
+    name: "Professional",
+    description: "For fast-moving teams that need high performance, security, and scale.",
+    price: { monthly: 49, annual: 39 },
+    annualNote: "Billed $468 annually",
+    popular: true,
+    cta: "Get Started with Pro",
+    ctaLink: "#pro",
+    features: [
+      { text: "Unlimited active projects", included: true },
+      { text: "100 GB High-speed storage", included: true },
+      { text: "Priority 24/7 chat & email", included: true },
+      { text: "Advanced team analytics", included: true },
+      { text: "Custom SLA & SSO", included: false }
+    ]
+  },
+  {
+    name: "Enterprise",
+    description: "Dedicated infrastructure, unlimited capabilities, and tailored governance.",
+    price: { monthly: 99, annual: 79 },
+    annualNote: "Billed $948 annually",
+    popular: false,
+    cta: "Contact Sales",
+    ctaLink: "#enterprise",
+    features: [
+      { text: "Everything in Professional", included: true },
+      { text: "Unlimited storage & bandwidth", included: true },
+      { text: "Dedicated account manager", included: true },
+      { text: "Custom SLA (99.99% uptime)", included: true },
+      { text: "Enterprise SSO (SAML / Okta)", included: true }
+    ]
+  }
+];
+
+export default function PricingSection() {
+  const [isAnnual, setIsAnnual] = useState(false);
+
+  return (
+    <section className="bg-slate-950 text-white py-20 px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col justify-center">
+      <div className="max-w-4xl mx-auto text-center mb-12">
+        <span className="text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full">
+          Transparent Pricing
+        </span>
+        <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight mt-4 mb-4">
+          Simple, predictable plans for growing teams
+        </h2>
+        <p className="text-slate-400 text-lg">
+          Start free with our 14-day trial. No credit card required. Cancel anytime.
+        </p>
+
+        {/* Toggle */}
+        <div className="flex items-center justify-center gap-4 mt-8">
+          <span className={`text-sm font-semibold cursor-pointer ${!isAnnual ? 'text-white' : 'text-slate-400'}`} onClick={() => setIsAnnual(false)}>
+            Monthly
+          </span>
+          <button 
+            type="button" 
+            role="switch" 
+            aria-checked={isAnnual}
+            onClick={() => setIsAnnual(!isAnnual)} 
+            className={`w-14 h-8 rounded-full transition-colors relative p-1 ${isAnnual ? 'bg-indigo-600' : 'bg-slate-800'}`}
+          >
+            <div className={`w-6 h-6 rounded-full bg-white transition-transform ${isAnnual ? 'translate-x-6' : 'translate-x-0'}`} />
+          </button>
+          <span className={`text-sm font-semibold cursor-pointer flex items-center gap-1.5 ${isAnnual ? 'text-white' : 'text-slate-400'}`} onClick={() => setIsAnnual(true)}>
+            Annual
+            <span className="bg-emerald-500/20 text-emerald-400 text-xs px-2 py-0.5 rounded-full font-bold">Save 20%</span>
+          </span>
+        </div>
+      </div>
+
+      {/* Grid */}
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch w-full">
+        {plans.map((plan) => (
+          <div 
+            key={plan.name}
+            className={`relative flex flex-col rounded-2xl p-8 border transition-all duration-300 hover:-translate-y-1 ${
+              plan.popular 
+                ? 'bg-slate-900/90 border-indigo-500 shadow-xl shadow-indigo-500/10 lg:scale-105' 
+                : 'bg-slate-900/40 border-slate-800'
+            }`}
+          >
+            {plan.popular && (
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xs font-bold uppercase tracking-wider py-1 px-4 rounded-full">
+                Most Popular
+              </span>
+            )}
+
+            <h3 className="text-xl font-bold">{plan.name}</h3>
+            <p className="text-slate-400 text-sm mt-2 min-h-[40px]">{plan.description}</p>
+
+            <div className="flex items-baseline my-6">
+              <span className="text-2xl font-bold text-slate-300">$</span>
+              <span className="text-5xl font-extrabold tracking-tight">
+                {isAnnual ? plan.price.annual : plan.price.monthly}
+              </span>
+              <span className="text-slate-400 text-sm ml-2">/month</span>
+            </div>
+            <p className="text-xs text-slate-500 -mt-4 mb-6">
+              {isAnnual ? plan.annualNote : 'Billed monthly'}
+            </p>
+
+            <hr className="border-slate-800 mb-6" />
+
+            <ul className="space-y-3 mb-8 flex-grow">
+              {plan.features.map((feat, idx) => (
+                <li key={idx} className={`flex items-center gap-3 text-sm ${feat.included ? 'text-slate-200' : 'text-slate-600 line-through'}`}>
+                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs ${feat.included ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/10 text-rose-500'}`}>
+                    {feat.included ? '✓' : '✕'}
+                  </span>
+                  {feat.text}
+                </li>
+              ))}
+            </ul>
+
+            <a
+              href={plan.ctaLink}
+              className={`w-full py-3 px-4 rounded-xl text-center text-sm font-bold transition-all ${
+                plan.popular 
+                  ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:brightness-110 shadow-lg shadow-indigo-500/25' 
+                  : 'bg-slate-800 hover:bg-slate-700 text-white'
+              }`}
+            >
+              {plan.cta}
+            </a>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
