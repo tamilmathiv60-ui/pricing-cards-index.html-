@@ -1,534 +1,444 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Responsive Pricing Cards</title>
-  <!-- Google Fonts: Plus Jakarta Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    /* ----------------------------------------------------
-       CSS RESET & THEME VARIABLES
-       ---------------------------------------------------- */
-    :root {
-      --font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-      --bg-color: #0b0f19;
-      --surface-color: #111827;
-      --surface-border: #1f2937;
-      --text-main: #f9fafb;
-      --text-muted: #9ca3af;
-      --text-subtle: #6b7280;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Pricing Cards</title>
 
-      --primary: #4f46e5;
-      --primary-light: #6366f1;
-      --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-      
-      --accent-badge-bg: rgba(99, 102, 241, 0.15);
-      --accent-badge-text: #818cf8;
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-      --card-radius: 20px;
-      --transition-speed: 0.3s;
-    }
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6fb;
+  color: #172033;
+  min-height: 100vh;
+  padding: 55px 20px;
+}
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+.container {
+  max-width: 1100px;
+  margin: auto;
+  text-align: center;
+}
 
-    body {
-      font-family: var(--font-family);
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 4rem 1.5rem;
-      line-height: 1.5;
-      background-image: 
-        radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 60%),
-        radial-gradient(circle at 10% 80%, rgba(168, 85, 247, 0.08) 0%, transparent 40%);
-    }
+h1 {
+  font-size: clamp(28px, 4vw, 42px);
+  margin-bottom: 12px;
+}
 
-    /* HEADER */
-    .pricing-header {
-      text-align: center;
-      max-width: 680px;
-      margin-bottom: 2.5rem;
-    }
+.subtitle {
+  color: #687386;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
 
-    .pricing-tag {
-      display: inline-block;
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent-badge-text);
-      background: var(--accent-badge-bg);
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      padding: 0.35rem 0.9rem;
-      border-radius: 9999px;
-      margin-bottom: 1rem;
-    }
+.toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+  font-weight: 600;
+}
 
-    .pricing-title {
-      font-size: clamp(2rem, 4vw, 2.85rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.2;
-      margin-bottom: 1rem;
-      background: linear-gradient(180deg, #ffffff 0%, #d1d5db 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+.switch {
+  width: 54px;
+  height: 29px;
+  background: #635bff;
+  border-radius: 30px;
+  cursor: pointer;
+  position: relative;
+  border: none;
+}
 
-    .pricing-subtitle {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-    }
+.switch::after {
+  content: "";
+  position: absolute;
+  width: 21px;
+  height: 21px;
+  top: 4px;
+  left: 4px;
+  background: white;
+  border-radius: 50%;
+  transition: .25s;
+}
 
-    /* BILLING TOGGLE */
-    .billing-toggle-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      margin-bottom: 3.5rem;
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
+.switch.active::after {
+  transform: translateX(25px);
+}
 
-    .toggle-label {
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: color var(--transition-speed);
-      user-select: none;
-    }
+.discount {
+  color: #168453;
+  font-size: 12px;
+  background: #d9f9e9;
+  padding: 6px 9px;
+  border-radius: 20px;
+}
 
-    .toggle-label.active {
-      color: var(--text-main);
-    }
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
 
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 54px;
-      height: 30px;
-    }
+.card {
+  background: white;
+  border: 1px solid #e3e7ef;
+  border-radius: 20px;
+  padding: 32px 25px;
+  text-align: left;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: transform .25s, box-shadow .25s;
+}
 
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
+.card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 16px 35px #24304d18;
+}
 
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      inset: 0;
-      background-color: var(--surface-border);
-      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border-radius: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
+.card.popular {
+  border: 2px solid #635bff;
+}
 
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 22px;
-      width: 22px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border-radius: 50%;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    }
+.badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #635bff;
+  color: white;
+  padding: 7px 17px;
+  border-radius: 20px;
+  font-size: 12px;
+  white-space: nowrap;
+}
 
-    input:checked + .slider {
-      background: var(--primary);
-    }
+.plan-name {
+  font-size: 21px;
+  margin-bottom: 10px;
+}
 
-    input:focus-visible + .slider {
-      outline: 2px solid var(--primary-light);
-      outline-offset: 2px;
-    }
+.description {
+  color: #778195;
+  line-height: 1.6;
+  font-size: 14px;
+  min-height: 45px;
+}
 
-    input:checked + .slider:before {
-      transform: translateX(24px);
-    }
+.price {
+  font-size: 42px;
+  font-weight: 750;
+  margin: 23px 0 5px;
+  letter-spacing: -1px;
+}
 
-    .discount-badge {
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      color: #ffffff;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 0.2rem 0.6rem;
-      border-radius: 9999px;
-      margin-left: 0.25rem;
-    }
+.price small {
+  font-size: 14px;
+  font-weight: 400;
+  color: #778195;
+  letter-spacing: 0;
+}
 
-    /* RESPONSIVE GRID */
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(1, 1fr);
-      gap: 2rem;
-      max-width: 1180px;
-      width: 100%;
-      align-items: stretch;
-    }
+.billing-note {
+  font-size: 12px;
+  color: #778195;
+  min-height: 18px;
+}
 
-    @media (min-width: 768px) and (max-width: 1024px) {
-      .pricing-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .pricing-card:last-child {
-        grid-column: span 2;
-        max-width: 580px;
-        margin: 0 auto;
-        width: 100%;
-      }
-    }
+hr {
+  border: none;
+  border-top: 1px solid #edf0f5;
+  margin: 25px 0;
+}
 
-    @media (min-width: 1025px) {
-      .pricing-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
+.features-title {
+  font-weight: 700;
+  margin-bottom: 17px;
+  font-size: 14px;
+}
 
-    /* PRICING CARD */
-    .pricing-card {
-      background-color: var(--surface-color);
-      border: 1px solid var(--surface-border);
-      border-radius: var(--card-radius);
-      padding: 2.25rem 2rem;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      transition: transform var(--transition-speed) ease, 
-                  border-color var(--transition-speed) ease, 
-                  box-shadow var(--transition-speed) ease;
-    }
+ul {
+  list-style: none;
+  margin-bottom: 28px;
+}
 
-    .pricing-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(99, 102, 241, 0.4);
-      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.5);
-    }
+li {
+  margin: 15px 0;
+  font-size: 14px;
+  color: #465166;
+  line-height: 1.5;
+}
 
-    /* POPULAR CARD HIGHLIGHT */
-    .pricing-card.popular {
-      background: linear-gradient(180deg, #161e31 0%, #111827 100%);
-      border: 2px solid var(--primary-light);
-      box-shadow: 0 12px 32px -8px rgba(99, 102, 241, 0.35);
-    }
+li::before {
+  content: "✓";
+  color: #168453;
+  font-weight: bold;
+  margin-right: 10px;
+}
 
-    @media (min-width: 1025px) {
-      .pricing-card.popular {
-        transform: scale(1.04);
-      }
-      .pricing-card.popular:hover {
-        transform: scale(1.04) translateY(-6px);
-      }
-    }
+.plan-button {
+  margin-top: auto;
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #635bff;
+  background: white;
+  color: #635bff;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .2s;
+}
 
-    .popular-tag {
-      position: absolute;
-      top: -14px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--primary-gradient);
-      color: #ffffff;
-      font-size: 0.75rem;
-      font-weight: 800;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      padding: 0.3rem 1.1rem;
-      border-radius: 9999px;
-    }
+.plan-button:hover {
+  background: #eeedff;
+}
 
-    .plan-name {
-      font-size: 1.35rem;
-      font-weight: 700;
-      margin-bottom: 0.4rem;
-    }
+.popular .plan-button {
+  background: #635bff;
+  color: white;
+}
 
-    .plan-desc {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      min-height: 42px;
-    }
+.popular .plan-button:hover {
+  background: #4940e8;
+}
 
-    .price-box {
-      display: flex;
-      align-items: baseline;
-      margin: 1.5rem 0 0.5rem 0;
-    }
+.footer {
+  margin-top: 35px;
+  font-size: 13px;
+  color: #778195;
+  line-height: 1.7;
+}
 
-    .currency {
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-right: 2px;
-    }
+#message {
+  display: none;
+  margin: 25px auto 0;
+  padding: 15px;
+  max-width: 500px;
+  border-radius: 10px;
+  background: #e0f8eb;
+  color: #146b43;
+  line-height: 1.6;
+}
 
-    .price-val {
-      font-size: 3rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      transition: opacity 0.15s ease;
-    }
+@media (max-width: 850px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 16px;
+  }
 
-    .billing-period {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      margin-left: 0.4rem;
-    }
+  .card.popular {
+    margin-top: 10px;
+  }
+}
 
-    .billed-note {
-      font-size: 0.8rem;
-      color: var(--text-subtle);
-      height: 18px;
-      margin-bottom: 1.5rem;
-      transition: opacity 0.15s ease;
-    }
+@media (max-width: 560px) {
+  body {
+    padding: 35px 16px;
+  }
 
-    .card-divider {
-      height: 1px;
-      background: var(--surface-border);
-      margin: 0.5rem 0 1.5rem 0;
-      border: 0;
-    }
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
 
-    /* FEATURE LIST */
-    .feature-list {
-      list-style: none;
-      margin-bottom: 2rem;
-      flex-grow: 1;
-    }
+  .card {
+    padding: 30px 23px;
+  }
 
-    .feature-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.92rem;
-      margin-bottom: 0.9rem;
-      color: #e5e7eb;
-    }
+  .price {
+    font-size: 38px;
+  }
 
-    .feature-item.disabled {
-      color: var(--text-subtle);
-      text-decoration: line-through;
-    }
-
-    .check-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: rgba(16, 185, 129, 0.15);
-      color: #10b981;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-    }
-
-    .cross-icon {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: rgba(239, 68, 68, 0.1);
-      color: #ef4444;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-    }
-
-    /* BUTTONS */
-    .cta-btn {
-      display: block;
-      width: 100%;
-      text-align: center;
-      padding: 0.9rem 1.25rem;
-      border-radius: 12px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      text-decoration: none;
-      transition: all var(--transition-speed) ease;
-      cursor: pointer;
-      border: 1px solid transparent;
-    }
-
-    .cta-btn.secondary {
-      background: #1f2937;
-      color: var(--text-main);
-      border-color: #374151;
-    }
-
-    .cta-btn.secondary:hover {
-      background: #374151;
-      border-color: #4b5563;
-    }
-
-    .cta-btn.primary {
-      background: var(--primary-gradient);
-      color: #ffffff;
-      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.35);
-    }
-
-    .cta-btn.primary:hover {
-      box-shadow: 0 6px 22px rgba(99, 102, 241, 0.55);
-      filter: brightness(1.1);
-    }
-  </style>
+  .toggle {
+    gap: 8px;
+    font-size: 13px;
+  }
+}
+</style>
 </head>
+
 <body>
 
-  <!-- Header -->
-  <header class="pricing-header">
-    <span class="pricing-tag">Transparent Pricing</span>
-    <h1 class="pricing-title">Simple, predictable plans for growing teams</h1>
-    <p class="pricing-subtitle">Start free with our 14-day trial. No credit card required. Cancel anytime.</p>
-  </header>
+<main class="container">
+  <h1>Simple, Transparent Pricing</h1>
 
-  <!-- Billing Frequency Toggle -->
-  <div class="billing-toggle-container">
-    <span class="toggle-label active" id="monthly-label">Monthly</span>
-    <label class="switch" aria-label="Toggle Monthly or Annual Billing">
-      <input type="checkbox" id="pricing-toggle">
-      <span class="slider"></span>
-    </label>
-    <span class="toggle-label" id="annual-label">
-      Annual
-      <span class="discount-badge">Save 20%</span>
-    </span>
+  <p class="subtitle">
+    Choose the perfect plan for your needs.<br>
+    Upgrade anytime as you grow.
+  </p>
+
+  <div class="toggle">
+    <span>Monthly</span>
+    <button
+      class="switch"
+      id="billingSwitch"
+      aria-label="Switch billing period"
+      aria-pressed="false"
+      type="button">
+    </button>
+    <span>Yearly</span>
+    <span class="discount">Save 20%</span>
   </div>
 
-  <!-- Pricing Cards -->
-  <main class="pricing-grid">
-    
-    <!-- Tier 1: Starter -->
-    <article class="pricing-card">
-      <div class="card-header">
-        <h2 class="plan-name">Starter</h2>
-        <p class="plan-desc">Essential tools for individuals and solo developers testing the waters.</p>
-        <div class="price-box">
-          <span class="currency">$</span>
-          <span class="price-val" data-monthly="19" data-annual="15">19</span>
-          <span class="billing-period">/month</span>
-        </div>
-        <p class="billed-note" data-monthly="Billed monthly" data-annual="Billed $180 annually">Billed monthly</p>
+  <section class="pricing-grid" aria-label="Pricing plans">
+
+    <article class="card">
+      <h2 class="plan-name">Basic</h2>
+      <p class="description">
+        Perfect for beginners and personal projects.
+      </p>
+
+      <div class="price">
+        ₹<span data-month="199" data-year="159">199</span>
+        <small>/ month</small>
       </div>
+      <p class="billing-note">Billed monthly</p>
 
-      <hr class="card-divider">
+      <hr>
 
-      <ul class="feature-list">
-        <li class="feature-item"><span class="check-icon">✓</span> Up to 3 active projects</li>
-        <li class="feature-item"><span class="check-icon">✓</span> 10 GB Cloud storage</li>
-        <li class="feature-item"><span class="check-icon">✓</span> Standard email support</li>
-        <li class="feature-item"><span class="check-icon">✓</span> Community access</li>
-        <li class="feature-item disabled"><span class="cross-icon">✕</span> Advanced analytics</li>
-        <li class="feature-item disabled"><span class="cross-icon">✕</span> Custom domain & SSO</li>
+      <p class="features-title">What's included</p>
+      <ul>
+        <li>1 project</li>
+        <li>5 GB storage</li>
+        <li>Basic support</li>
+        <li>Essential features</li>
       </ul>
 
-      <a href="#signup-starter" class="cta-btn secondary">Start Free Trial</a>
+      <button class="plan-button" data-plan="Basic">
+        Choose Basic
+      </button>
     </article>
 
-    <!-- Tier 2: Professional (Popular) -->
-    <article class="pricing-card popular">
-      <div class="popular-tag">Most Popular</div>
-      <div class="card-header">
-        <h2 class="plan-name">Professional</h2>
-        <p class="plan-desc">For fast-moving teams that need high performance, security, and scale.</p>
-        <div class="price-box">
-          <span class="currency">$</span>
-          <span class="price-val" data-monthly="49" data-annual="39">49</span>
-          <span class="billing-period">/month</span>
-        </div>
-        <p class="billed-note" data-monthly="Billed monthly" data-annual="Billed $468 annually">Billed monthly</p>
+    <article class="card popular">
+      <span class="badge">MOST POPULAR</span>
+
+      <h2 class="plan-name">Pro</h2>
+      <p class="description">
+        Ideal for growing businesses and creators.
+      </p>
+
+      <div class="price">
+        ₹<span data-month="499" data-year="399">499</span>
+        <small>/ month</small>
       </div>
+      <p class="billing-note">Billed monthly</p>
 
-      <hr class="card-divider">
+      <hr>
 
-      <ul class="feature-list">
-        <li class="feature-item"><span class="check-icon">✓</span> Unlimited active projects</li>
-        <li class="feature-item"><span class="check-icon">✓</span> 100 GB High-speed storage</li>
-        <li class="feature-item"><span class="check-icon">✓</span> Priority 24/7 chat & email</li>
-        <li class="feature-item"><span class="check-icon">✓</span> Advanced team analytics</li>
-        <li class="feature-item"><span class="check-icon">✓</span> Custom domain integration</li>
-        <li class="feature-item disabled"><span class="cross-icon">✕</span> Custom SLA & SSO</li>
+      <p class="features-title">Everything in Basic, plus</p>
+      <ul>
+        <li>10 projects</li>
+        <li>50 GB storage</li>
+        <li>Priority support</li>
+        <li>Advanced analytics</li>
+        <li>Team collaboration</li>
       </ul>
 
-      <a href="#signup-pro" class="cta-btn primary">Get Started with Pro</a>
+      <button class="plan-button" data-plan="Pro">
+        Choose Pro
+      </button>
     </article>
 
-    <!-- Tier 3: Enterprise -->
-    <article class="pricing-card">
-      <div class="card-header">
-        <h2 class="plan-name">Enterprise</h2>
-        <p class="plan-desc">Dedicated infrastructure, unlimited capabilities, and tailored governance.</p>
-        <div class="price-box">
-          <span class="currency">$</span>
-          <span class="price-val" data-monthly="99" data-annual="79">99</span>
-          <span class="billing-period">/month</span>
-        </div>
-        <p class="billed-note" data-monthly="Billed monthly" data-annual="Billed $948 annually">Billed monthly</p>
+    <article class="card">
+      <h2 class="plan-name">Premium</h2>
+      <p class="description">
+        Advanced tools for teams and professionals.
+      </p>
+
+      <div class="price">
+        ₹<span data-month="999" data-year="799">999</span>
+        <small>/ month</small>
       </div>
+      <p class="billing-note">Billed monthly</p>
 
-      <hr class="card-divider">
+      <hr>
 
-      <ul class="feature-list">
-        <li class="feature-item"><span class="check-icon">✓</span> Everything in Professional</li>
-        <li class="feature-item"><span class="check-icon">✓</span> Unlimited storage & bandwidth</li>
-        <li class="feature-item"><span class="check-icon">✓</span> Dedicated account manager</li>
-        <li class="feature-item"><span class="check-icon">✓</span> Custom SLA (99.99% uptime)</li>
-        <li class="feature-item"><span class="check-icon">✓</span> Enterprise SSO (SAML / Okta)</li>
-        <li class="feature-item"><span class="check-icon">✓</span> Invoicing & PO support</li>
+      <p class="features-title">Everything in Pro, plus</p>
+      <ul>
+        <li>Unlimited projects</li>
+        <li>200 GB storage</li>
+        <li>24/7 premium support</li>
+        <li>Custom integrations</li>
+        <li>Advanced security</li>
       </ul>
 
-      <a href="#contact-sales" class="cta-btn secondary">Contact Sales</a>
+      <button class="plan-button" data-plan="Premium">
+        Choose Premium
+      </button>
     </article>
 
-  </main>
+  </section>
 
-  <!-- Dynamic Price Switch Script -->
-  <script>
-    const toggle = document.getElementById('pricing-toggle');
-    const monthlyLabel = document.getElementById('monthly-label');
-    const annualLabel = document.getElementById('annual-label');
-    const priceElements = document.querySelectorAll('.price-val');
-    const noteElements = document.querySelectorAll('.billed-note');
+  <div id="message" role="status" aria-live="polite"></div>
 
-    function updatePricing(isAnnual) {
-      monthlyLabel.classList.toggle('active', !isAnnual);
-      annualLabel.classList.toggle('active', isAnnual);
+  <p class="footer">
+    All prices are sample prices for this demo.<br>
+    No payment is collected by this website.
+  </p>
+</main>
 
-      priceElements.forEach(el => {
-        el.style.opacity = '0';
-        setTimeout(() => {
-          el.textContent = isAnnual ? el.getAttribute('data-annual') : el.getAttribute('data-monthly');
-          el.style.opacity = '1';
-        }, 120);
-      });
+<script>
+const billingSwitch = document.getElementById("billingSwitch");
+const prices = document.querySelectorAll("[data-month]");
+const billingNotes = document.querySelectorAll(".billing-note");
+const message = document.getElementById("message");
 
-      noteElements.forEach(note => {
-        note.style.opacity = '0';
-        setTimeout(() => {
-          note.textContent = isAnnual ? note.getAttribute('data-annual') : note.getAttribute('data-monthly');
-          note.style.opacity = '1';
-        }, 120);
-      });
-    }
+let yearly = false;
 
-    toggle.addEventListener('change', (e) => updatePricing(e.target.checked));
-    monthlyLabel.addEventListener('click', () => { toggle.checked = false; updatePricing(false); });
-    annualLabel.addEventListener('click', () => { toggle.checked = true; updatePricing(true); });
-  </script>
+billingSwitch.addEventListener("click", function () {
+  yearly = !yearly;
+
+  billingSwitch.classList.toggle("active", yearly);
+  billingSwitch.setAttribute("aria-pressed", String(yearly));
+
+  prices.forEach(function (price) {
+    price.textContent = yearly
+      ? price.dataset.year
+      : price.dataset.month;
+  });
+
+  billingNotes.forEach(function (note) {
+    note.textContent = yearly
+      ? "Billed annually · 20% savings"
+      : "Billed monthly";
+  });
+
+  message.style.display = "none";
+});
+
+document.querySelectorAll(".plan-button").forEach(function (button) {
+  button.addEventListener("click", function () {
+    const plan = button.dataset.plan;
+    const priceElement = button
+      .closest(".card")
+      .querySelector("[data-month]");
+
+    const price = priceElement.textContent;
+
+    message.innerHTML =
+      "<strong>" + plan + " plan selected!</strong><br>" +
+      "Price: ₹" + price + " per month.<br>" +
+      "Billing: " + (yearly ? "Yearly" : "Monthly") +
+      ". This is a demo selection; no payment was made.";
+
+    message.style.display = "block";
+    message.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest"
+    });
+  });
+});
+</script>
+
 </body>
 </html>
